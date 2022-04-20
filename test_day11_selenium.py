@@ -9,16 +9,14 @@
 # 8) close
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import pytest
 
-
-class TS_Login_001:
+class test_Login_001():
     username = "//input[@id='txtUsername']"
     password = "//input[@id='txtPassword']"
     login_button = "//input[@id='btnLogin']"
-    driver = webdriver.Chrome()
 
-    def __init__(self):
+    def __init__(self,driver):
+        self.driver = driver
         self.driver.get("https://opensource-demo.orangehrmlive.com/")
 
     def set_username(self):
@@ -31,18 +29,19 @@ class TS_Login_001:
         self.driver.find_element(By.XPATH,self.login_button).click()
 
     def close_browser(self):
-        self.driver.close()
+        self.driver.quit()
 
 
-# obj.close_browser()
+driver = webdriver.Chrome()
 
-class test_dashbord(TS_Login_001):
-    def test_001_login(self):
-        obj = TS_Login_001()
-        obj.set_username()
-        obj.set_password()
-        obj.click_login()
+def test_001_login():
+    obj = test_Login_001(driver)
+    obj.set_username()
+    obj.set_password()
+    obj.click_login()
+    obj.close_browser()
 
 
-# obj1 = test_dashbord()
-# obj1.test_001_login()
+
+
+
